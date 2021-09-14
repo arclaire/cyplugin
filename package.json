@@ -1,0 +1,29 @@
+{
+  "name": "cyplugin",
+  "version": "1.0.0",
+  "description": "sample plugin",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bundleDependencies": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arclaire/cyplugin.git"
+  },
+  "author": "lucy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arclaire/cyplugin/issues"
+  },
+  "homepage": "https://github.com/arclaire/cyplugin#readme",
+  "cordova": {
+    "id": "com-cy-plugin",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-ios"
+  ]
+}
