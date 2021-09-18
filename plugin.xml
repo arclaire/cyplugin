@@ -1,2 +1,19 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="com-cy-plugin" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android"><name>cyplugin</name><js-module name="cyplugin" src="www/cyplugin.js"><clobbers target="cordova.plugins.cyplugin" /></js-module><platform name="ios"><config-file parent="/*" target="config.xml"><feature name="cyplugin"><param name="ios-package" value="cyplugin" /></feature></config-file><source-file src="src/ios/cyplugin.m" /></platform></plugin>
+<plugin id="com-cy-plugin" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<name>cyplugin</name>
+<js-module name="cyplugin" src="www/cyplugin.js">
+<clobbers target="cordova.plugins.cyplugin" />
+</js-module>
+<platform name="ios">
+    <config-file parent="/*" target="config.xml">
+
+    <feature name="cyplugin">   
+        <param name="ios-package" value="cyplugin" />
+    </feature>
+    </config-file>
+
+    <source-file src="src/ios/cyplugin.swift" />
+    <!-- Controllers -->        
+    <source-file src="src/ios/ViewController.swift" /> 
+</platform>
+</plugin>
