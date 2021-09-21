@@ -15,6 +15,7 @@
     <source-file src="src/ios/cyplugin.swift" />
     <!-- Controllers -->        
     <source-file src="src/ios/ViewController.swift" /> 
+     <resource-file src="src/ios/Storyboard.storyboard"/>
     <preference name="UseSwiftLanguageVersion" value="5" />
 </platform>
 </plugin>

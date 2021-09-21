@@ -35,7 +35,8 @@
         var pluginResult: CDVPluginResult? = nil
         let echo = command?.arguments[0] as? String
         if let _ = echo{
-            let vc:ViewController = ViewController()
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "controllerId") as! ViewController
             let viewController = UIApplication.shared.windows.first?.rootViewController
             let alert = UIAlertController(title: "Did you bring your towel?", message: "It's recommended you bring your towel before continuing.", preferredStyle: .alert)
             
