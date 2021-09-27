@@ -12,38 +12,63 @@
     
     @objc(add:) func add(_ command: CDVInvokedUrlCommand?) {
         var pluginResult: CDVPluginResult? = nil
-        let echo = command?.arguments[0] as? String
-        if let _ = echo{
-            let vc:ViewController = ViewController()
-            let viewController = UIApplication.shared.windows.first?.rootViewController
-            let alert = UIAlertController(title: "Did you bring your towel?", message: "It's recommended you bring your towel before continuing.", preferredStyle: .alert)
+        
+        
+        print("ECHO",command?.arguments[0])
+        if let echo = command?.arguments[0] as? NSDictionary {
+            var strTitle = ""
+            var strMessage = ""
+            if let age  = echo.object(forKey: "age") {
+                strMessage =  "your age : \(age)"
+            }
+            if let name = echo.object(forKey: "name") {
+                strTitle = "Are you \(name)"
+            }
             
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+            print("ECHO",echo)
+            
+            let alert = UIAlertController(title: strTitle, message: strMessage, preferredStyle: .alert)
+            
+            
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+                pluginResult = CDVPluginResult(status: .ok, messageAs: "User confirmed data correct")
+            
+                self.commandDelegate.send(pluginResult, callbackId: command?.callbackId)
+                
+            }))
+            
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction!) in
+                pluginResult = CDVPluginResult(status: .ok, messageAs: "Data is  incorrect")
+                self.commandDelegate.send(pluginResult, callbackId: command?.callbackId)
+            }))
             
             viewController!.present(alert, animated: true)
             
+            
         } else {
             pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
+            commandDelegate.send(pluginResult, callbackId: command?.callbackId)
         }
         
-        commandDelegate.send(pluginResult, callbackId: command?.callbackId)
-        commandDelegate.send(pluginResult, callbackId: command?.callbackId)
+       
+        
+        
     }
     
     @objc(coolMethod:) func coolMethod(_ command: CDVInvokedUrlCommand?) {
         var pluginResult: CDVPluginResult? = nil
         let echo = command?.arguments[0] as? String
         if let _ = echo{
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let storyboard = UIStoryboard(name: "Storyboard", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "controllerId") as! ViewController
-            let viewController = UIApplication.shared.windows.first?.rootViewController
+            let viewController = UIApplication.shared.windows.first?.rootViewController as? UINavigationController
             let alert = UIAlertController(title: "Did you bring your towel?", message: "It's recommended you bring your towel before continuing.", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
             alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
             
-            viewController!.present(vc, animated: true)
+            //viewController!.present(vc, animated: true)
+            viewController?.pushViewController(vc, animated: true)
             
         } else {
             pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
