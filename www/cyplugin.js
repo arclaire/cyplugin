@@ -4,7 +4,7 @@ module.exports.coolMethod = function (arg0, success, error) {
     exec(success, error, 'cyplugin', 'coolMethod', [arg0]);
 };
 
-module.exports.add = function (arg0,  adddsuccess, error) {
+module.exports.add = function (arg0,  onSuccess, onError) {
     exec(function onSuccess(){}, function onError(){}, 'cyplugin', 'add', [arg0]);
 };
 
