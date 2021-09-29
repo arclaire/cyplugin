@@ -26,8 +26,8 @@ YourPluginName.add = function(onSuccess, onError) {
     exec(onSuccess, onError, PLUGIN_NAME, "add", [arg0]);
  };
 
- YourPluginName.add = function(onSuccess, onError) {
-    exec(onSuccess, onError, getUserData, "add", []);
+ YourPluginName.getUserData = function(onSuccess, onError) {
+    exec(onSuccess, onError, PLUGIN_NAME, "getUserData", []);
  };
 
 module.exports = YourPluginName;
