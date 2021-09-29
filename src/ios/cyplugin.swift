@@ -32,13 +32,14 @@
             
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
                 pluginResult = CDVPluginResult(status: .ok, messageAs: "User confirmed data correct")
-            
+                pluginResult?.setKeepCallbackAs(true)
                 self.commandDelegate.send(pluginResult, callbackId: command?.callbackId)
                 
             }))
             
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction!) in
-                pluginResult = CDVPluginResult(status: .ok, messageAs: "Data is  incorrect")
+                pluginResult = CDVPluginResult(status: .error, messageAs: "Data is  incorrect")
+                pluginResult?.setKeepCallbackAs(true)
                 self.commandDelegate.send(pluginResult, callbackId: command?.callbackId)
             }))
             
@@ -69,6 +70,7 @@
             
             //viewController!.present(vc, animated: true)
             viewController?.pushViewController(vc, animated: true)
+            pluginResult = CDVPluginResult(status: .ok, messageAs: "User confirmed data correct")
             
         } else {
             pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
