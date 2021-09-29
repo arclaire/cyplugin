@@ -12,14 +12,16 @@
 // };
 
 
+
+
 module.exports = {
     add: function (arg0, successCallback, errorCallback) {
-        cordova.exec(successCallback, errorCallback, "cyplugin", "add", [arg0]);
+        cordova.exec(function successCallback(){}, function errorCallback(){}, "cyplugin", "add", [arg0]);
     },
     coolMethod: function (arg0, successCallback, errorCallback) {
-        cordova.exec(successCallback, errorCallback, "cyplugin", "coolMethod", [arg0]);
+        cordova.exec(function successCallback(){}, function errorCallback(){}, "cyplugin", "coolMethod", [arg0]);
     },
     getUserData: function (arg0, successCallback, errorCallback) {
-        cordova.exec(successCallback, errorCallback, "cyplugin", "getUserData", []);
+        cordova.exec(function successCallback(){}, function errorCallback(){}, "cyplugin", "getUserData", []);
     }
 };
