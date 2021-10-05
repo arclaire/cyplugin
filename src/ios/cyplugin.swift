@@ -2,7 +2,8 @@
     
     // MARK: Properties
     var pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
-    
+    var strCallbackID: String?
+    var alertplugin: UIAlertController?
     //This method is called when the plugin is initialized; plugin setup methods got here
     override func pluginInitialize() {
         super.pluginInitialize();
@@ -12,7 +13,7 @@
     
     @objc(add:) func add(_ command: CDVInvokedUrlCommand?) {
         var pluginResult: CDVPluginResult? = nil
-        
+        self.strCallbackID = command?.callbackId
         
         print("ECHO",command?.arguments[0])
         if let echo = command?.arguments[0] as? NSDictionary {
@@ -28,19 +29,31 @@
             print("ECHO",echo)
             
             let alert = UIAlertController(title: strTitle, message: strMessage, preferredStyle: .alert)
-            
+           
             
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
-                pluginResult = CDVPluginResult(status: .ok, messageAs: "User confirmed data correct")
+                let strConfirm = "User confirmed data correct"
+                UserDefaults.standard.set(strConfirm, forKey: "userInput1")
+                UserDefaults.standard.synchronize()
+                pluginResult = CDVPluginResult(status: .ok, messageAs: strConfirm)
                 pluginResult?.setKeepCallbackAs(true)
-                self.commandDelegate.send(pluginResult, callbackId: command?.callbackId)
+                alert.dismiss(animated: true, completion: {
+                    self.commandDelegate.send(pluginResult, callbackId: self.strCallbackID)
+                })
+                
                 
             }))
             
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction!) in
-                pluginResult = CDVPluginResult(status: .error, messageAs: "Data is  incorrect")
+                let strConfirm = "Data is  incorrect"
+                UserDefaults.standard.set(strConfirm, forKey: "userInput1")
+                UserDefaults.standard.synchronize()
+                
+                pluginResult = CDVPluginResult(status: .error, messageAs: strConfirm)
                 pluginResult?.setKeepCallbackAs(true)
-                self.commandDelegate.send(pluginResult, callbackId: command?.callbackId)
+                alert.dismiss(animated: true, completion: {
+                    self.commandDelegate.send(pluginResult, callbackId: self.strCallbackID)
+                })
             }))
             
             viewController!.present(alert, animated: true)
@@ -82,22 +95,14 @@
     @objc(getUserData:) func getUserData(_ command: CDVInvokedUrlCommand?) {
         //let storyboard = UIStoryboard(name: "Main", bundle: nil)
         var pluginResult: CDVPluginResult? = nil
-        let echo = command?.arguments[0] as? String
-        if let _ = echo{
-            let vc:ViewController = ViewController()
-            let viewController = UIApplication.shared.windows.first?.rootViewController
-            let alert = UIAlertController(title: "Did you bring your towel?", message: "It's recommended you bring your towel before continuing.", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
-            
-            viewController!.present(alert, animated: true)
-            
-        } else {
-            pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
-        }
+        let str = UserDefaults.standard.string(forKey: "userInput1")
+        print("USD", str)
+        pluginResult = CDVPluginResult(status: CDVCommandStatus.ok, messageAs: str)
+       
         
         commandDelegate.send(pluginResult, callbackId: command?.callbackId)
-        commandDelegate.send(pluginResult, callbackId: command?.callbackId)
+        
     }
+    
+    
 }
